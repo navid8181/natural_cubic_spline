@@ -3,16 +3,38 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+
+# %%
+
+
+def fx(a, b, h=500):
+    X = []
+    Y = []
+    for i in range(0,h+1):
+        x = a + (1.0*(b-a)/h)*i
+        y =  math.sin(x)
+
+        
+        X.append(x)
+        Y.append(y)
+
+    return X, Y
+
+
 # %%
 # start from zero
 # n = 5
-point = 6
-x = np.array([1, 2,2.8, 3, 4, 5])
-y = np.array([2, 4,2 ,5, 6, 8])
+
+pointCount = 4
+point = pointCount+1
+
+x = np.array([1, 2, 2.8, 3, 4, 5])
+y = np.array([2, 4, 2, 5, 6, 8])
+
+x, y = fx(0, 2.0 * math.pi, pointCount)
 plt.grid()
 plt.plot(x, y, 'o')
 # %%
-
 
 
 def aj(j):
@@ -28,7 +50,7 @@ def sj(X, j, bj, cj, dj):
 
     diff = (X - x[j])
 
-    return ajj+ bj[j] * diff + cj[j] * (diff**2) + dj[j] * (diff ** 3)
+    return ajj + bj[j] * diff + cj[j] * (diff**2) + dj[j] * (diff ** 3)
 
 
 # %%
@@ -123,20 +145,22 @@ h = 500
 for i in range(point-1):
     xi = x[i]
     xNext = x[i+1]
-    
+
     dis = (xNext - xi)/h
-    for j in range(h) :
+    for j in range(h):
         newX = xi + j * dis
-        newY = sj(newX,i,bj,ci,dj)
+        newY = sj(newX, i, bj, ci, dj)
         XApprox.append(newX)
         YApprox.append(newY)
-    
-    
+
+
 # %%
+X,Y = fx(0,2.0 * math.pi,500)
+plt.plot(X,Y,color = 'black')
 plt.plot(x, y, 'o')
 xarr = np.array(XApprox)
 yarr = np.array(YApprox)
-plt.plot(xarr,yarr,color = 'red')
+plt.plot(xarr, yarr, color='red')
 plt.grid()
 plt.show()
 # %%
